@@ -4,6 +4,9 @@ require_relative "IsMarketOpen.rb"
 require "open-uri"
 require "csv"
 
+cur = 'JPY'
+cur_ch = '日圓'
+
 if ARGV.length == 0
 	date_str = Date.today.to_s
 else
@@ -26,20 +29,22 @@ if date_end > Date.today
 end
 
 
-pat = /([\d\/]{10})\s+([\d:]{8})<\/td><td class="title">美金 \(USD\)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)/
+pat = /([\d\/]{10})\s+([\d:]{8})<\/td><td class="title">#{cur_ch} \(#{cur}\)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)/
 
 for d in date_str..date_end
-	url = "http://rate.bot.com.tw/Pages/UIP004/UIP00421.aspx?lang=zh-TW&whom1=USD&whom2=&date="\
-	+ d.strftime("%Y%m%d") +  "&entity=1&year=2015&month=04&term=99&afterOrNot=0&view=1"
-	page = open(url).read
-	data = page.scan(pat).to_a
-	unless data.empty? or not IsMarketOpen(d)
-		CSV.open("USDNTD/" + d.strftime("%Y%m%d") + ".csv", "w") do |csv|
-		  for tick in data
-		  	csv << tick
-		  end
+	if IsMarketOpen(d)
+		url = "http://rate.bot.com.tw/Pages/UIP004/UIP00421.aspx?lang=zh-TW&whom1=" + cur + "&whom2=&date="\
+		+ d.strftime("%Y%m%d") +  "&entity=1&year=2015&month=04&term=99&afterOrNot=0&view=1"
+		page = open(url).read
+		data = page.scan(pat).to_a
+		unless data.empty?
+			CSV.open(cur + "TWD/" + d.strftime("%Y%m%d") + ".csv", "w") do |csv|
+			  for tick in data
+			  	csv << tick
+			  end
+			end
+			puts d.strftime("%Y/%m/%d saved")
 		end
-		puts d.strftime("%Y/%m/%d saved")
 	end
 end
 
