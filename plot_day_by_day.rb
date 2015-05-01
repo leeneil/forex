@@ -4,6 +4,8 @@ require "csv"
 require "gchart"
 require "gruff"
 
+cur = 'JPY'
+
 if ARGV.length == 0
 	date_end = Date.today
 	date_str = date_end - 365
@@ -23,7 +25,7 @@ high_prices = []
 low_prices = []
 count = -1
 for d in date_str..date_end
-	filename = "USDTWD/" + d.strftime("%Y%m%d") + ".csv"
+	filename = cur + "TWD/" + d.strftime("%Y%m%d") + ".csv"
 	if File.exist?(filename)
 		data = CSV.read(filename).to_a
 		open_price  = data.first
@@ -59,7 +61,7 @@ end
 Gchart.line(
 	:data => [close_prices.transpose[1]],
 	:size => "600x400",
-	:title => "USD/NTD during " + date_str.strftime("%Y/%m/%d") \
+	:title => cur + "/NTD during " + date_str.strftime("%Y/%m/%d") \
 	+ " ~ " + date_end.strftime("%Y/%m/%d"),
 	:legend => ['Close'],
 	:format => 'file', 
@@ -71,7 +73,7 @@ Gchart.line(
     )
 
 g = Gruff::Line.new
-g.title = "USD/TWD during " + date_str.strftime("%Y/%m/%d") \
+g.title = cur + "/TWD during " + date_str.strftime("%Y/%m/%d") \
 	+ " ~ " + date_end.strftime("%Y/%m/%d")
 # g.labels = open_prices.transpose[0]
 g.data('OPEN',    open_prices.transpose[1])
@@ -83,7 +85,7 @@ g.data('CLOSE',   close_prices.transpose[1])
 g.write("test_gruff_openclose.png")
 
 g = Gruff::Line.new
-g.title = "USD/TWD during " + date_str.strftime("%Y/%m/%d") \
+g.title = cur + "/TWD during " + date_str.strftime("%Y/%m/%d") \
 	+ " ~ " + date_end.strftime("%Y/%m/%d")
 # g.labels = open_prices.transpose[0]
 g.data('highest', high_prices)
