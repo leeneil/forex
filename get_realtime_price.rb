@@ -17,7 +17,7 @@ url = "http://rate.bot.com.tw/Pages/UIP004/UIP00421.aspx?lang=zh-TW&whom1="\
  +  "&entity=1&year=2015&month=04&term=99&afterOrNot=0&view=1"
 pat = /([\d\/]{10})\s+([\d:]{8})<\/td><td class="title">#{cur_ch} \(#{cur}\)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)/
 
-puts "\e[0;34mToday is  #{today.strftime("%Y/%m/%d")}\e[0m"
+puts "           \e[0;34mToday is  #{today.strftime("%Y/%m/%d")}\e[0m"
 
 old_page = ""
 old_len  = 0
@@ -84,4 +84,4 @@ while now.hour < 16
 	end
 	sleep(300)
 end
-puts "   \e[1;34m#{now.strftime('%H:%M:%S')}   Market closed\e[0m"
+puts "\e[1;34m#{now.strftime('%H:%M:%S')}   Market closed\e[0m"
