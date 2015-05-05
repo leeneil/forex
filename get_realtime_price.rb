@@ -17,7 +17,7 @@ url = "http://rate.bot.com.tw/Pages/UIP004/UIP00421.aspx?lang=zh-TW&whom1="\
  +  "&entity=1&year=2015&month=04&term=99&afterOrNot=0&view=1"
 pat = /([\d\/]{10})\s+([\d:]{8})<\/td><td class="title">#{cur_ch} \(#{cur}\)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)<\/td><td class="decimal">([\d.]+)/
 
-puts "Today is " + today.strftime("%Y/%m/%d")
+puts "\e[0;34mToday is  #{today.strftime("%Y/%m/%d")}\e[0m"
 
 old_page = ""
 now = Time.now
@@ -28,15 +28,16 @@ while now.hour < 16
 
 	page = open(url).read
 	if page == old_page
-		puts now.strftime('%H:%M:%S') + "            no update"
+		puts now.strftime('%H:%M:%S') + "   \e[1;30mno update\e[0m"
 	else
 		old_page = page
 		data = page.scan(pat).to_a
 		open_price = data.first
 		update = data.last
 		change = update[5].to_f - open_price[5].to_f
-		change = change.round(2)
-		msg = update[1] + "  " + "\e[0;32;47mBUY:  #{update[4]}\e[0m" + "   " + "\e[0;31;47mSELL:  #{update[5]}\e[0m"
+		change = change.round(3)
+		msg = update[1] + "   " + "\e[0;32;47mBUY:  #{update[4].to_f.round(3).to_s}\e[0m" \
+		                + "   " + "\e[0;31;47mSELL:  #{update[5].to_f.round(3).to_s}\e[0m"
 		if change == 0
 			puts msg + "   " + "\e[0;37;40mBUY:  #{change}\e[0m"
 		else
@@ -82,3 +83,4 @@ while now.hour < 16
 	end
 	sleep(60)
 end
+puts "   \e[1;34m#{now.strftime('%H:%M:%S')}   Market closed\e[0m"
