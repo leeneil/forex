@@ -1,7 +1,7 @@
 # encoding=utf-8 
 require "Date"
 require "open-uri"
-require "csv"
+require "colorize"
 require "gchart"
 require "gruff"
 
@@ -28,12 +28,23 @@ while now.hour < 16
 
 	page = open(url).read
 	if page == old_page
-		puts now.strftime('%H:%M:%S') + "    no update"
+		puts now.strftime('%H:%M:%S') + "            no update"
 	else
 		old_page = page
 		data = page.scan(pat).to_a
+		open_price = data.first
 		update = data.last
-		puts update[1] + " BUY: " +  update[4] + "   SELL: " + update[5]
+		change = update[5].to_f - open_price[5].to_f
+		change = change.round(2)
+		if change == 0
+			puts update[1] + "  BUY: " +  update[4] + "   SELL: " + update[5] + "   " + change.to_s.gray
+		else
+			if change > 0
+				puts update[1] + "  BUY: " +  update[4] + "   SELL: " + update[5] + "   " + change.to_s.red
+			else
+				puts update[1] + "  BUY: " +  update[4] + "   SELL: " + update[5] + "   " + change.to_s.green
+			end
+		end
 		
 
 		buy_prices = Array.new(0)
