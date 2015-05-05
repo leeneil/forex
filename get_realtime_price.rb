@@ -36,13 +36,14 @@ while now.hour < 16
 		update = data.last
 		change = update[5].to_f - open_price[5].to_f
 		change = change.round(2)
+		msg = update[1] + "  " + "\e[0;32;47mBUY:  #{update[4]}\e[0m" + "   " + "\e[0;31;47mSELL:  #{update[5]}\e[0m"
 		if change == 0
-			puts update[1] + "  BUY: " +  update[4] + "   SELL: " + update[5] + "   " + change.to_s.gray
+			puts msg + "   " + "\e[0;37;40mBUY:  #{change}\e[0m"
 		else
 			if change > 0
-				puts update[1] + "  BUY: " +  update[4] + "   SELL: " + update[5] + "   " + change.to_s.red
+				puts msg + "   " + "\e[0;37;41m#{change}\e[0m"
 			else
-				puts update[1] + "  BUY: " +  update[4] + "   SELL: " + update[5] + "   " + change.to_s.green
+				puts msg + "   " + "\e[0;37;42m#{change}\e[0m"
 			end
 		end
 		
