@@ -4,18 +4,28 @@ require "csv"
 require "gchart"
 require "gruff"
 
-cur = 'JPY'
+# cur = 'JPY'
+cur = 'USD'
 
-if ARGV.length == 0
+case ARGV.length
+when 0
+	cur = 'USD'
 	date_end = Date.today
 	date_str = date_end - 365
+when 1
+	cur = ARGV[0]
+	date_end = Date.today
+	date_str = date_end - 365
+when 2
+	cur = ARGV[0]
+	date_str = Date.parse( ARGV[1] )
+	date_end = Date.today
+when 3
+	cur = ARGV[0]
+	date_str = Date.parse( ARGV[1] )
+	date_end = Date.parse( ARGV[2] )
 else
-	date_str =  Date.parse( ARGV[0] )
-	if ARGV.length == 1
-		date_end = Date.today
-	else
-		date_end = Date.parse( ARGV[1] )
-	end
+	puts "Invalid inputs"
 end
 
 # dic = {}
