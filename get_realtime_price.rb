@@ -20,6 +20,7 @@ pat = /([\d\/]{10})\s+([\d:]{8})<\/td><td class="title">#{cur_ch} \(#{cur}\)<\/t
 puts "\e[0;34mToday is  #{today.strftime("%Y/%m/%d")}\e[0m"
 
 old_page = ""
+old_len  = 0
 now = Time.now
 
 while now.hour < 16
@@ -33,18 +34,18 @@ while now.hour < 16
 		old_page = page
 		data = page.scan(pat).to_a
 		open_price = data.first
-		update = data.last
-		change = update[5].to_f - open_price[5].to_f
-		change = change.round(3)
-		msg = update[1] + "   " + "\e[0;32;47mBUY:  #{update[4].to_f.round(3).to_s}\e[0m" \
-		                + "   " + "\e[0;31;47mSELL:  #{update[5].to_f.round(3).to_s}\e[0m"
-		if change == 0
-			puts msg + "   " + "\e[0;37;40mBUY:  #{change}\e[0m"
-		else
-			if change > 0
-				puts msg + "   " + "\e[0;37;41m#{change}\e[0m"
+		for update in data[old_len..(data.length-1)]
+			change = update[5].to_f - open_price[5].to_f
+			msg = update[1] + "   " + "\e[0;32;47mBUY  #{'%.3f'  % update[4].to_f}\e[0m" \
+			                + "   " + "\e[0;31;47mSELL #{'%.3f' % update[5].to_f}\e[0m"
+			if change == 0
+				puts msg + "   " + "\e[0;37;40mBUY:  #{'%.3f' % change}\e[0m"
 			else
-				puts msg + "   " + "\e[0;37;42m#{change}\e[0m"
+				if change > 0
+					puts msg + "   " + "\e[0;37;41m#{'+%.3f' % change}\e[0m"
+				else
+					puts msg + "   " + "\e[0;37;42m#{'%.3f' % change}\e[0m"
+				end
 			end
 		end
 		
@@ -81,6 +82,6 @@ while now.hour < 16
 		# g.dataxy 'SELL', time, sel_prices 
 		g.write('test_gruff_reamtime_' + today.strftime("%Y%m%d") + '.png')
 	end
-	sleep(300)
+	sleep(30)
 end
 puts "   \e[1;34m#{now.strftime('%H:%M:%S')}   Market closed\e[0m"
