@@ -1,5 +1,4 @@
-USDNTD/
-USDTWD/
-JPYTWD/
+*TWD/
 test*
 *.png
+.DS_Store
