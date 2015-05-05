@@ -39,7 +39,7 @@ while now.hour < 16
 			msg = update[1] + "   " + "\e[0;32;47mBUY  #{'%.3f'  % update[4].to_f}\e[0m" \
 			                + "   " + "\e[0;31;47mSELL #{'%.3f' % update[5].to_f}\e[0m"
 			if change == 0
-				puts msg + "   " + "\e[0;37;40mBUY:  #{'%.3f' % change}\e[0m"
+				puts msg + "   " + "\e[0;37;40m#{' %.3f' % change}\e[0m"
 			else
 				if change > 0
 					puts msg + "   " + "\e[0;37;41m#{'+%.3f' % change}\e[0m"
@@ -48,7 +48,7 @@ while now.hour < 16
 				end
 			end
 		end
-		
+		old_len = data.length
 
 		buy_prices = Array.new(0)
 		sel_prices = Array.new(0)
@@ -82,6 +82,6 @@ while now.hour < 16
 		# g.dataxy 'SELL', time, sel_prices 
 		g.write('test_gruff_reamtime_' + today.strftime("%Y%m%d") + '.png')
 	end
-	sleep(30)
+	sleep(300)
 end
 puts "   \e[1;34m#{now.strftime('%H:%M:%S')}   Market closed\e[0m"
