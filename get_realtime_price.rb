@@ -81,6 +81,6 @@ while now.hour < 16
 		# g.dataxy 'SELL', time, sel_prices 
 		g.write('test_gruff_reamtime_' + today.strftime("%Y%m%d") + '.png')
 	end
-	sleep(60)
+	sleep(300)
 end
 puts "   \e[1;34m#{now.strftime('%H:%M:%S')}   Market closed\e[0m"
