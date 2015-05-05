@@ -4,20 +4,35 @@ require_relative "IsMarketOpen.rb"
 require "open-uri"
 require "csv"
 
-cur = 'JPY'
-cur_ch = '日圓'
 
-if ARGV.length == 0
+dic = {'USD'=>'美金', 'JPY'=>'日圓', 'CAD'=>'加拿大幣', 'AUD'=>'澳幣'}
+
+case ARGV.length
+when 0
+	cur = 'USD'
 	date_str = Date.today.to_s
-else
-	date_str = ARGV[0]
-end
-if ARGV.length > 1
-	date_end = ARGV[1]
-else
 	date_end = date_str
+when 1
+	cur = ARGV[0]
+	date_str = Date.today.to_s
+	date_end = date_str
+when 2
+	cur = ARGV[0]
+	date_str = ARGV[1]
+	date_end = date_str
+when 3
+	cur = ARGV[0]
+	date_str = ARGV[1]
+	date_end = ARGV[2]
+else
+	puts "Invalid inputs"
 end
 
+unless Dir.exist?(cur + 'TWD')
+	Dir.mkdir(cur + 'TWD')
+end
+
+cur_ch = dic[cur]
 
 date_str = Date.parse(date_str)
 date_end = Date.parse(date_end)
