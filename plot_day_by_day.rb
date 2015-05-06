@@ -68,19 +68,19 @@ end
 
 # x = (1..data.length).to_a
 
-Gchart.line(
-	:data => [close_prices.transpose[1]],
-	:size => "600x400",
-	:title => cur + "/NTD during " + date_str.strftime("%Y/%m/%d") \
-	+ " ~ " + date_end.strftime("%Y/%m/%d"),
-	:legend => ['Close'],
-	:format => 'file', 
-	:filename => 'test_gchart.png',
-	:min_value => close_prices.transpose[1].min-0.1,
-	:max_value => close_prices.transpose[1].max+0.1,
-	:axis_with_labels => 'x',
-    :axis_labels => open_prices.transpose[0]
-    )
+# Gchart.line(
+# 	:data => [close_prices.transpose[1]],
+# 	:size => "600x400",
+# 	:title => cur + "/NTD during " + date_str.strftime("%Y/%m/%d") \
+# 	+ " ~ " + date_end.strftime("%Y/%m/%d"),
+# 	:legend => ['Close'],
+# 	:format => 'file', 
+# 	:filename => 'test_gchart.png',
+# 	:min_value => close_prices.transpose[1].min-0.1,
+# 	:max_value => close_prices.transpose[1].max+0.1,
+# 	:axis_with_labels => 'x',
+#     :axis_labels => open_prices.transpose[0]
+#     )
 
 g = Gruff::Line.new
 g.title = cur + "/TWD during " + date_str.strftime("%Y/%m/%d") \
