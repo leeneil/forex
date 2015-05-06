@@ -5,8 +5,17 @@ require "colorize"
 require "gchart"
 require "gruff"
 
-cur = 'USD'
-cur_ch = '美金'
+dic = {'USD'=>'美金', 'JPY'=>'日圓', 'CAD'=>'加拿大幣', 'AUD'=>'澳幣'}
+
+case ARGV.length
+when 0
+	cur = 'USD'
+when 1
+	cur = ARGV[0]
+else
+	puts "invalid inputs"
+end
+cur_ch = dic[cur]
 
 today = Date.today
 
