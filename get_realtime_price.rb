@@ -1,7 +1,6 @@
 # encoding=utf-8 
 require "Date"
 require "open-uri"
-require "colorize"
 require "gchart"
 require "gruff"
 
