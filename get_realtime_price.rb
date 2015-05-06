@@ -1,5 +1,5 @@
 # encoding=utf-8 
-require "Date"
+require "date"
 require "open-uri"
 require "gchart"
 require "gruff"
